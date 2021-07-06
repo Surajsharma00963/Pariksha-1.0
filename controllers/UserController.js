@@ -1,7 +1,6 @@
 const users = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const SendmailTransport = require("nodemailer/lib/sendmail-transport");
 const  {CLIENT_URL} =process.env.CLIENT_URL
 const sendEmail = require("./sendMail")
 const UserController = {
@@ -33,7 +32,7 @@ const UserController = {
 
       const Activation_Token = createActivationToken(newUser)
       const url=`${CLIENT_URL}/user/activate/${Activation_Token}`
-      sendMail(email,url)
+      //sendMail(email,url)
       res.json({ msg: "Register Successfull Please activate your mail to Login " });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
