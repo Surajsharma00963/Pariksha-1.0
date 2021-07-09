@@ -18,7 +18,7 @@ app.use(
 );
 
 //Routes
-app.use("/user", require("./routes/UserRoutes"));
+app.use("/user", require("./routes/AdminRoutes"));
 
 
 
