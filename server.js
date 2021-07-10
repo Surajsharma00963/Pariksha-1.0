@@ -19,6 +19,8 @@ app.use(
 
 //Routes
 app.use("/user", require("./routes/AdminRoutes"));
+app.use("/user/category",require("./routes/CategoryRoutes"))
+app.use("/user/exam",require("./routes/ExamRoutes"))
 
 
 
@@ -29,7 +31,7 @@ mongoose.connect(
   {
     useCreateIndex: true,
     useNewUrlParser: true,
-    useFindAndModify: true,
+    useFindAndModify: false,
     useUnifiedTopology: true,
   },
   (err) => {

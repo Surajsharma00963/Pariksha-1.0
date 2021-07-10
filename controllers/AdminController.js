@@ -2,13 +2,14 @@ const users = require("../models/AdminModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { CLIENT_URL } = process.env;
+const ForgotPasswordMail = require("./ForgetPasswordMail");
 const sendMail = require("./sendMail");
 const AdminController = {
   register: async (req, res) => {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, confirmPassword } = req.body;
 
-      if (!name || !email || !password)
+      if (!name || !email || !password || !confirmPassword)
         return res.status(400).json({ msg: "Please fill in all fields." });
 
       if (!validateEmail(email))
@@ -22,8 +23,12 @@ const AdminController = {
         return res
           .status(400)
           .json({ msg: "Password must be at least 6 characters." });
+      if (password !== confirmPassword)
+        return res
+          .status(400)
+          .json({ msg: "Password does not match" });
 
-      const passwordHash = await bcrypt.hash(password, 12);
+      const passwordHash = await bcrypt.hash(confirmPassword, 12);
 
       const newUser = {
         name,
@@ -44,7 +49,6 @@ const AdminController = {
       return res.status(500).json({ msg: err.message });
     }
   },
-
 
   activationEmail: async (req, res) => {
     try {
@@ -71,7 +75,6 @@ const AdminController = {
     }
   },
 
-
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
@@ -84,6 +87,7 @@ const AdminController = {
         return res.status(400).json({ msg: "Password is incorrect." });
 
       const refresh_token = createRefreshToken({ id: user._id });
+      console.log(refresh_token)
       res.cookie("refreshtoken", refresh_token, {
         httpOnly: true,
         path: "/user/refresh_token",
@@ -96,24 +100,59 @@ const AdminController = {
     }
   },
 
-
   getAccessToken: (req, res) => {
     try {
-        const rf_token = req.cookies.refreshtoken
-        if(!rf_token) return res.status(400).json({msg: "Please login now!"})
+      const rf_token = req.cookies.refreshtoken;
+      if (!rf_token) return res.status(400).json({ msg: "Please login now!" });
 
-        jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-            if(err) return res.status(400).json({msg: "Please login now!"})
+      jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if (err) return res.status(400).json({ msg: "Please login now!" });
+        const access_token = createAccessToken({ id: user.id });
 
-            const access_token = createAccessToken({id: user.id})
-            res.json({access_token})
-        })
+        res.json({ access_token });
+      });
     } catch (err) {
-        return res.status(500).json({msg: err.message})
+      return res.status(500).json({ msg: err.message });
     }
-},
-};
+  },
 
+  forgotPassword: async (req, res) => {
+    try {
+      const { email } = req.body;
+      const user = await users.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ msg: "This email does not exist." });
+      }
+      const access_token = createAccessToken({ id: user._id });
+      const url = `${CLIENT_URL}/user/resetPassword/${access_token}`;
+
+      ForgotPasswordMail(email, url, "Reset your Account Password");
+      res.json({ msg: "Password Resent, please check your email" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  resetPassword: async(req,res) =>{
+    try {
+      const {password, confirmPassword} = req.body
+      if (password !== confirmPassword)
+        return res
+          .status(400)
+          .json({ msg: "Password does not match" });
+        console.log(confirmPassword)
+      const PasswordHash = await bcrypt.hash(confirmPassword,12)
+      console.log(req.users)
+      await users.findByIdAndUpdate({_id:req.users.id},{
+        password:PasswordHash
+
+      })
+      res.json({msg:"password Reset Successfully"})
+      
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  }
+};
 
 function validateEmail(email) {
   const re =
@@ -121,17 +160,15 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
-
 const createActivationToken = (payload) => {
   return jwt.sign(payload, process.env.ACTIVATION_TOKEN_SECRET, {
-    expiresIn: "5m",
+    expiresIn: "30m",
   });
 };
 
-
 const createAccessToken = (payload) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "30m",
   });
 };
 const createRefreshToken = (payload) => {
