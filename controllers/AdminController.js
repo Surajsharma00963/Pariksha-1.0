@@ -24,9 +24,7 @@ const AdminController = {
           .status(400)
           .json({ msg: "Password must be at least 6 characters." });
       if (password !== confirmPassword)
-        return res
-          .status(400)
-          .json({ msg: "Password does not match" });
+        return res.status(400).json({ msg: "Password does not match" });
 
       const passwordHash = await bcrypt.hash(confirmPassword, 12);
 
@@ -87,7 +85,7 @@ const AdminController = {
         return res.status(400).json({ msg: "Password is incorrect." });
 
       const refresh_token = createRefreshToken({ id: user._id });
-      console.log(refresh_token)
+      console.log(refresh_token);
       res.cookie("refreshtoken", refresh_token, {
         httpOnly: true,
         path: "/user/refresh_token",
@@ -132,26 +130,33 @@ const AdminController = {
       return res.status(500).json({ msg: err.message });
     }
   },
-  resetPassword: async(req,res) =>{
+  resetPassword: async (req, res) => {
     try {
-      const {password, confirmPassword} = req.body
+      const { password, confirmPassword } = req.body;
       if (password !== confirmPassword)
-        return res
-          .status(400)
-          .json({ msg: "Password does not match" });
-        console.log(confirmPassword)
-      const PasswordHash = await bcrypt.hash(confirmPassword,12)
-      console.log(req.users)
-      await users.findByIdAndUpdate({_id:req.users.id},{
-        password:PasswordHash
-
-      })
-      res.json({msg:"password Reset Successfully"})
-      
+        return res.status(400).json({ msg: "Password does not match" });
+      console.log(confirmPassword);
+      const PasswordHash = await bcrypt.hash(confirmPassword, 12);
+      console.log(req.users);
+      await users.findByIdAndUpdate(
+        { _id: req.users.id },
+        {
+          password: PasswordHash,
+        }
+      );
+      res.json({ msg: "password Reset Successfully" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
-  }
+  },
+  logout: async (req, res) => {
+    try {
+        res.clearCookie('refreshtoken', {path: '/user/refresh_token'})
+        return res.json({msg: "Logged out."})
+    } catch (err) {
+        return res.status(500).json({msg: err.message})
+    }
+},
 };
 
 function validateEmail(email) {

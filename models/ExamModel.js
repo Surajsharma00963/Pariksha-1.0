@@ -25,12 +25,7 @@ const ExamSchema = new mongoose.Schema({
     type:String
   },
 
-  Questions: [
-      {
-          type:mongoose.Schema.Types.ObjectId,
-          ref:"questions"
-      }
-  ],
+  Questions: []
 });
 
 module.exports = mongoose.model("exams", ExamSchema);
