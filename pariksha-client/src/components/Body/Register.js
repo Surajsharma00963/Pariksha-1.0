@@ -68,7 +68,7 @@ function Register() {
                       <span className="text-decoration-underline text-hover">
                         Signin{" "}
                       </span>
-                      heres
+                      here
                     </Link>
                   </div>
                   <button type="submit" className="btn border  text-light mt-3">

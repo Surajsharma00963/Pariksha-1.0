@@ -85,7 +85,6 @@ const AdminController = {
         return res.status(400).json({ msg: "Password is incorrect." });
 
       const refresh_token = createRefreshToken({ id: user._id });
-      console.log(refresh_token);
       res.cookie("refreshtoken", refresh_token, {
         httpOnly: true,
         path: "/user/refresh_token",
@@ -149,14 +148,34 @@ const AdminController = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getUserInfo: async (req, res) => {
+    try {
+      const user = await users.findById(req.users.id).select('-password');
+      res.json(user);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
   logout: async (req, res) => {
     try {
-        res.clearCookie('refreshtoken', {path: '/user/refresh_token'})
-        return res.json({msg: "Logged out."})
+      res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
+      return res.json({ msg: "Logged out." });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  updateUser: async (req, res) => {
+    try {
+        const {name, avatar} = req.body
+        await users.findOneAndUpdate({_id: req.users.id}, {
+            name, avatar
+        })
+
+        res.json({msg: "Update Success!"})
     } catch (err) {
         return res.status(500).json({msg: err.message})
     }
-},
+  }
 };
 
 function validateEmail(email) {

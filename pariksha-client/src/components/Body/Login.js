@@ -52,7 +52,7 @@ function Login() {
                       <span className="text-decoration-underline text-hover">
                         SignUp{" "}
                       </span>
-                      heres
+                      here
                     </Link>
                   </div>
                   <button type="submit" className="btn border text-light mt-3">
