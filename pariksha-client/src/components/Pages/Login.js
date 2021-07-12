@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import NavbarNav from "../Navbar/NavbarNav";
 import Logo from "../../logo.png";
+import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 
 function Login() {
@@ -19,11 +20,20 @@ function Login() {
                   <h1 className="text-center">Login</h1>
                   <div className="my-4">
                     <label className="form-label">Email address</label>
-                    <input type="email" placeholder="Enter your Email" required className="form-control" />
+                    <input
+                      type="email"
+                      placeholder="Enter your Email"
+                      required
+                      className="form-control"
+                    />
                   </div>
                   <div className="mb-2">
                     <label className="form-label">Password</label>
-                    <input type="password" placeholder="Enter your Password" className="form-control" />
+                    <input
+                      type="password"
+                      placeholder="Enter your Password"
+                      className="form-control"
+                    />
                   </div>
                   <div className=" text-end">
                     <Link
@@ -53,6 +63,7 @@ function Login() {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     </Fragment>
   );

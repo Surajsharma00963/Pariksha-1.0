@@ -2,8 +2,12 @@ import React, { Fragment } from "react";
 import NavbarNav from "../Navbar/NavbarNav";
 import Logo from "../../logo.png";
 import { Link } from "react-router-dom";
+import Footer from "../Footer/Footer";
 
 function Register() {
+
+    
+
   return (
     <Fragment>
       <div className="m-0 p-0 mt-5 pt-4  bg-black bg-img1">
@@ -75,6 +79,8 @@ function Register() {
             </div>
           </div>
         </div>
+
+        <Footer/>
       </div>
     </Fragment>
   );
