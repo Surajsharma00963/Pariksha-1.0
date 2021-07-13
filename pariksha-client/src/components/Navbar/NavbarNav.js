@@ -1,9 +1,20 @@
 import React, { Fragment } from "react";
 import logo from "../../logo.png";
 import { Form, Navbar, Nav } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink,useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function NavbarNav() {
+  const auth = useSelector((state) => state.auth);
+
+  const history = useHistory()
+
+  const { isLogged } = auth;
+  const userLink = () => {
+    return history.push('/dashboard')
+
+        
+  };
   return (
     <Fragment>
       <Navbar
@@ -52,13 +63,19 @@ function NavbarNav() {
             activeClassName="bg-primary"
           > */}
             <Nav className="gap-4 text-dark fw-bold d-inline-flex flex-row m-0 p-0">
-              <NavLink
-                className="nav-link btn  hover border border-dark p-0 m-0 px-5 py-1"
-                activeClassName="bg-dark text-light m-0 p-0"
-                to="/login"
-              >
-                Login
-              </NavLink>
+              {isLogged ? (
+                userLink()
+              ) : (
+                <NavLink
+                  className="nav-link btn  hover border border-dark p-0 m-0 px-5 py-1"
+                  activeClassName="bg-dark text-light m-0 p-0"
+                  to="/login"
+                >
+                  Login
+                </NavLink>
+              )}
+
+              
               {/* </Button> */}
               {/* <Button className="btn m-0 p-0 " variant="outline-secondary"> */}
               <NavLink

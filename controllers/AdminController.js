@@ -7,9 +7,9 @@ const sendMail = require("./sendMail");
 const AdminController = {
   register: async (req, res) => {
     try {
-      const { name, email, password, confirmPassword } = req.body;
+      const { name, email, password } = req.body;
 
-      if (!name || !email || !password || !confirmPassword)
+      if (!name || !email || !password)
         return res.status(400).json({ msg: "Please fill in all fields." });
 
       if (!validateEmail(email))
@@ -23,10 +23,9 @@ const AdminController = {
         return res
           .status(400)
           .json({ msg: "Password must be at least 6 characters." });
-      if (password !== confirmPassword)
-        return res.status(400).json({ msg: "Password does not match" });
+      
 
-      const passwordHash = await bcrypt.hash(confirmPassword, 12);
+      const passwordHash = await bcrypt.hash(password, 12);
 
       const newUser = {
         name,
@@ -36,7 +35,7 @@ const AdminController = {
 
       const activation_token = createActivationToken(newUser);
 
-      const url = `${CLIENT_URL}/user/activate/${activation_token}`;
+      const url = `${CLIENT_URL}/Activation/${activation_token}`;
 
       sendMail(email, url, "Verify your email address");
 

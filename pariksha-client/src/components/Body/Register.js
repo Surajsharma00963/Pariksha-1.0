@@ -1,12 +1,71 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import NavbarNav from "../Navbar/NavbarNav";
 import Logo from "../../logo.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Footer from "../Footer/Footer";
+import { showErrMsg, showSuccessMsg } from "../utils/Notification/Notification";
+import {
+  isEmpty,
+  isEmail,
+  isLength,
+  isMatch,
+} from "../utils/Validation/Validation";
+
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  err: "",
+  success: "",
+};
 
 function Register() {
+  const [user, setUser] = useState(initialState);
 
-    
+  const { name, email, password, confirmPassword, err, success } = user;
+
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value, err: "", success: "" });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isEmpty(name) || isEmpty(password))
+      return setUser({
+        ...user,
+        err: "Please fill in all fields.",
+        success: "",
+      });
+
+    if (!isEmail(email))
+      return setUser({ ...user, err: "Invalid emails.", success: "" });
+
+    if (isLength(password))
+      return setUser({
+        ...user,
+        err: "Password must be at least 6 characters.",
+        success: "",
+      });
+
+    if (!isMatch(password, confirmPassword))
+      return setUser({ ...user, err: "Password did not match.", success: "" });
+    try {
+      
+      const res = await axios.post("/user/Register", {
+        name,
+        email,
+        password,
+      });
+
+      setUser({ ...user, err: "", success: res.data.msg });
+    } catch (err) {
+      err.response.data.msg &&
+        setUser({ ...user, err: err.response.data.msg, success: "" });
+    }
+  };
 
   return (
     <Fragment>
@@ -24,14 +83,21 @@ function Register() {
                 />
               </div>
               <div className="col-xl-3 col-12 my-5 mx-auto border rounded-3 m-0 p-0  opac">
-                <form className="mx-4 my-4 ">
-                  <h1 className="text-center">Register</h1>
+                <h1 className="text-center">Register</h1>
+                <div>
+                  {err && showErrMsg(err)}
+                  {success && showSuccessMsg(success)}
+                </div>
+                <form className="mx-4 my-4 " onSubmit={handleSubmit}>
                   <div className="my-3">
                     <label className="form-label">Organisation Name</label>
                     <input
                       type="text"
                       placeholder="Enter your Organisation Name"
                       className="form-control"
+                      onChange={handleChangeInput}
+                      name="name"
+                      value={name}
                     />
                   </div>
                   <div className="my-3">
@@ -40,6 +106,9 @@ function Register() {
                       type="email"
                       placeholder="Enter your Email"
                       className="form-control"
+                      onChange={handleChangeInput}
+                      name="email"
+                      value={email}
                     />
                   </div>
                   <div className="my-3">
@@ -48,6 +117,9 @@ function Register() {
                       type="password"
                       placeholder="Enter your Password"
                       className="form-control"
+                      onChange={handleChangeInput}
+                      name="password"
+                      value={password}
                     />
                   </div>
                   <div className="mb-2">
@@ -56,6 +128,9 @@ function Register() {
                       type="password"
                       placeholder="Enter your Confirm Password"
                       className="form-control"
+                      onChange={handleChangeInput}
+                      name="confirmPassword"
+                      value={confirmPassword}
                     />
                   </div>
                   <div className=" text-end">
@@ -80,7 +155,7 @@ function Register() {
           </div>
         </div>
 
-        <Footer/>
+        <Footer />
       </div>
     </Fragment>
   );
