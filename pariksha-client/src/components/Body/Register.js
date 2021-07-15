@@ -53,7 +53,6 @@ function Register() {
     if (!isMatch(password, confirmPassword))
       return setUser({ ...user, err: "Password did not match.", success: "" });
     try {
-      
       const res = await axios.post("/user/Register", {
         name,
         email,
@@ -140,10 +139,10 @@ function Register() {
                       to="/Login"
                     >
                       Already have an account?{" "}
-                      <span className="text-decoration-underline text-hover">
-                        Signin{" "}
+                      <span className="text-decoration-underline text-hover m-0 p-0">
+                        Login{" "}
                       </span>
-                      here
+                      
                     </Link>
                   </div>
                   <button type="submit" className="btn border  text-light mt-3">

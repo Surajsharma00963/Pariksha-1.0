@@ -32,13 +32,13 @@ function Footer() {
                 <h3>Services</h3>
                 <ul>
                   <li>
-                    <Link href="#">Exams</Link>
+                    <Link to="..">Exams</Link>
                   </li>
                   <li>
-                    <Link href="#">Developing</Link>
+                    <Link to="..">Developing</Link>
                   </li>
                   <li>
-                    <Link href="#">Hosting</Link>
+                    <Link to="..">Hosting</Link>
                   </li>
                 </ul>
               </div>
@@ -46,13 +46,13 @@ function Footer() {
                 <h3>About</h3>
                 <ul>
                   <li>
-                    <Link href="#">Company</Link>
+                    <Link to="...">Company</Link>
                   </li>
                   <li>
-                    <Link href="#">Team</Link>
+                    <Link to="...">Team</Link>
                   </li>
                   <li>
-                    <Link href="#">Careers</Link>
+                    <Link to="...">Careers</Link>
                   </li>
                 </ul>
               </div>
@@ -60,14 +60,14 @@ function Footer() {
               <div className="col-12 d-flex my-3">
                 <div className="row mx-auto ">
                   <div className="col mx-auto w-auto">
-                    <Link href="#">
+                    <Link to="...">
                       <i>
                         <FaFacebook size="35px" color="white" />
                       </i>
                     </Link>
                   </div>
                   <div className="col mx-auto w-auto">
-                    <Link href="#">
+                    <Link to="...">
                       <i>
                         <FaTwitter size="35px" color="white" />
                       </i>
@@ -75,12 +75,12 @@ function Footer() {
                   </div>
 
                   <div className="col ">
-                  <Link href="#">
+                  <Link to="...">
                     <i><FaInstagram size="35px" color="white"/></i>
                   </Link>
                   </div>
                   <div className="col">
-                  <Link href="#">
+                  <Link to="...">
                     <i><FaLinkedin size="35px" color="white"/></i>
                   </Link>
                   </div>

@@ -23,14 +23,18 @@ function Activation() {
     },[activation_token])
 
     return (
-        <div className="active_page my-auto">
+        <div className="container-Fluid bg-black">
+            <div className="active_page my-auto py-5">
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
 
-            <p>Click Here to 
+            <div className="container text-center">
+            <button className="btn bg-success">Click Here to 
                 <Link to="/Login" exact>Login
                 </Link>
-            </p>
+            </button>
+            </div>
+        </div>
         </div>
     )
 }

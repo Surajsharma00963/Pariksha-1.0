@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ExamSchema = new mongoose.Schema({
   ExamTitle: {
-    text: String,
+    type: String,
   },
   UserID:{
     type: mongoose.Schema.Types.ObjectId,
@@ -15,7 +15,8 @@ const ExamSchema = new mongoose.Schema({
   ExamDescription:{
     type:String
   },
-  CategoryName: {
+
+  CategoryName:{
     type:String
   },
   ExamDate:{

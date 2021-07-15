@@ -34,7 +34,7 @@ function Login() {
       setUser({...user, err: '', success: res.data.msg})
       localStorage.setItem('firstLogin', true)
       dispatch(dispatchLogin())
-      history.push('/dashboard')
+      history.push('/#/dashboard')
       
     } catch (err) {
       err.response.data.msg &&
@@ -87,24 +87,23 @@ function Login() {
                       onChange={handleChangeInput}
                     />
                   </div>
-                  <div className=" w-auto">
-                    <p><Link
-                      className="nav-link bg-transparent w-auto float-end text-decoration-none fs-10 text-light hover m-0 p-0"
+                  <div className=" w-auto d-flex flex-column float-end text-end m-0 p-0">
+                    <p className="m-0 p-0"><Link
+                      className="nav-link bg-transparent w-auto  text-decoration-none fs-10 text-light hover m-0 p-0"
                       activeClassName="active bg-danger"
                       to="/forgot-password"
                     >
                       Forgot Password?
                     </Link></p>
-                    <p className="w-auto"><Link
-                      className="nav-link   bg-transparent float-end text-decoration-none fs-10 text-light hover m-0 p-0"
+                    <p className="m-0 p-0"><Link exact
+                      className="nav-link   bg-transparent  text-decoration-none fs-10 text-light hover m-0 p-0"
                       activeClassName="active bg-danger"
                       to="/Register"
                     >
                       Dont have account?{" "}
-                      <span className="text-decoration-underline text-hover">
+                      <span className="text-decoration-underline text-hover m-0">
                         SignUp{" "}
                       </span>
-                      here
                     </Link></p>
                   </div>
                   <button type="submit" className="btn border  text-light mt-5">

@@ -23,16 +23,16 @@ function NavbarNav() {
         expand="lg"
       >
         <Navbar.Brand className="m-0 p-0">
-          <NavLink to="/" className="m-0 p-0 me-5">
-            <img
-              src={logo}
-              width="200"
-              height="auto"
-              alt="logo"
-              className="m-0"
-            />
-          </NavLink>
-        </Navbar.Brand>
+        <NavLink to="/" className="m-0 p-0 me-5 ">
+          <img
+            src={logo}
+            width="200"
+            height="auto"
+            alt="logo"
+            className="m-0"
+          />
+        </NavLink>
+      </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll" className="m-0 p-0">
           <Nav

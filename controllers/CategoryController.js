@@ -7,7 +7,6 @@ const CategoryController = {
   AddCategory: async (req, res) => {
     try {
       const user = await users.findById({ _id: req.users.id });
-      console.log(user);
       const newCategory = new categories({
         UserID: user._id,
         userName: user.name,
@@ -22,7 +21,6 @@ const CategoryController = {
   GetCategory: async (req, res) => {
     try {
       const user = await users.findById({ _id: req.users.id });
-      console.log(user);
       const category = await categories.find({ UserID: user._id });
       res.json(category)
     } catch (err) {

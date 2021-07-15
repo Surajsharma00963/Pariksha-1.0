@@ -1,43 +1,51 @@
 import React from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
+import * as MdIcons from 'react-icons/md';
+
 
 export const UserNavbarData = [
   {
     title: 'Dashboard',
     path: '/Dashboard',
-    icon: <AiIcons.AiOutlineDashboard size="35px"/>,
-    cName: 'nav-text'
-  },
-  {
-    title: 'Exams',
-    path: '/reports',
-    icon: <FaIcons.FaBookReader size="35px" />,
+    icon: <AiIcons.AiOutlineDashboard size="30px"/>,
     cName: 'nav-text'
   },
   {
     title: 'Category',
-    path: '/products',
-    icon: <FaIcons.FaLayerGroup size="35px"/>,
+    path: '/Category',
+    icon: <FaIcons.FaLayerGroup size="30px"/>,
     cName: 'nav-text'
   },
   {
-    title: 'Team',
+    title: 'Exams',
+    path: '/exam',
+    icon: <FaIcons.FaBookReader size="30px" />,
+    cName: 'nav-text'
+  },
+  
+  {
+    title: 'Exam Invite',
     path: '/team',
-    icon: <IoIcons.IoMdPeople />,
+    icon: <MdIcons.MdInsertInvitation  size="30px"/>,
     cName: 'nav-text'
   },
   {
-    title: 'Messages',
-    path: '/messages',
-    icon: <FaIcons.FaEnvelopeOpenText />,
+    title: 'Evaluate',
+    path: '/Evaluate',
+    icon: <FaIcons.FaCheckCircle size="30px" />,
     cName: 'nav-text'
   },
   {
-    title: 'Support',
+    title: 'Candidates',
+    path: '/Candidates',
+    icon: <FaIcons.FaUsers size="30px"/>,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Profile',
     path: '/support',
-    icon: <IoIcons.IoMdHelpCircle />,
+    icon: <FaIcons.FaUserAlt size="30px"/>,
     cName: 'nav-text'
   }
 ];

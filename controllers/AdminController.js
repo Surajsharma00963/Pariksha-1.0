@@ -54,7 +54,6 @@ const AdminController = {
         activation_token,
         process.env.ACTIVATION_TOKEN_SECRET
       );
-      console.log(user);
 
       const { name, email, password } = user;
       const check = await users.findOne({ email });
@@ -120,7 +119,7 @@ const AdminController = {
         return res.status(400).json({ msg: "This email does not exist." });
       }
       const access_token = createAccessToken({ id: user._id });
-      const url = `${CLIENT_URL}/user/resetPassword/${access_token}`;
+      const url = `${CLIENT_URL}/resetPassword/${access_token}`;
 
       ForgotPasswordMail(email, url, "Reset your Account Password");
       res.json({ msg: "Password Resent, please check your email" });
@@ -133,9 +132,7 @@ const AdminController = {
       const { password, confirmPassword } = req.body;
       if (password !== confirmPassword)
         return res.status(400).json({ msg: "Password does not match" });
-      console.log(confirmPassword);
       const PasswordHash = await bcrypt.hash(confirmPassword, 12);
-      console.log(req.users);
       await users.findByIdAndUpdate(
         { _id: req.users.id },
         {

@@ -11,6 +11,12 @@ import Dashboard from "./components/Body/UserPages/DashBoard";
 import Activation from "./components/Body/Activation";
 import axios from "axios";
 import { dispatchLogin,fetchuUser,dispatchGetUser } from "./redux/action/authActions";
+import Category from "./components/Body/UserPages/Category";
+import Exam from "./components/Body/UserPages/Exams";
+import AddQuestion from "./components/Body/UserPages/AddQuestions"
+import ViewQuestions  from "./components/Body/UserPages/ViewQuestion";
+import ForgotPassword from "./components/Body/ForgotPassword";
+import ResetPassword from "./components/Body/ResetPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +47,7 @@ function App() {
       getUser()
     }
   },[token,dispatch])
+  
   return (
     <div>
       <Fragment>
@@ -51,6 +58,17 @@ function App() {
             <Route exact path="/Login" component={Login} />
             <Route exact path="/Register" component={Register} />
             <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/Category" component={Category} />
+            <Route exact path="/Exam" component={Exam} />
+            <Route exact path="/Addquestion/:id" component={AddQuestion} />
+            <Route exact path="/ViewQuestions/:id" component={ViewQuestions} />
+            <Route exact path="/forgot-password" component={ForgotPassword} />
+            <Route exact path="/resetPassword/:token" component={ResetPassword} />
+
+
+            
+
+
             <Route
               exact
               path="/Activation/:activation_token"

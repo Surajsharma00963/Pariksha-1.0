@@ -8,9 +8,7 @@ const ExamController = {
   AddExam: async (req, res) => {
     try {
       const user = await users.findById({ _id: req.users.id });
-      console.log(user);
-      //   const category = await categories.find({ UserID: user._id }).select('-_id')
-      //   console.log(category);
+      const category = await categories.find({ UserID: user.id }).select('CategoryName')
       const newExam = new exams({
         ExamTitle: req.body.ExamTitle,
         UserID: user._id,
@@ -29,7 +27,6 @@ const ExamController = {
   GetExam: async (req, res) => {
     try {
       const user = await users.findById({ _id: req.users.id });
-      console.log(user);
       const exam = await exams.find({ UserID: user._id });
       res.json(exam);
     } catch (err) {
@@ -39,10 +36,6 @@ const ExamController = {
 
   AddQuestions: async (req, res) => {
     try {
-      // const user = await users.findById({ _id: req.users.id });
-      // console.log(user);
-      // const exam = await exams.find({ UserID: user.id });
-      // console.log(exam);
       const newQuestions = new questions({
         QuestionName: req.body.QuestionName,
         options:req.body.options ,
@@ -50,9 +43,7 @@ const ExamController = {
         marks: req.body.marks,
       });
       const { id } = req.params;
-      console.log(id);
       const newQuestion = await questions.create(newQuestions);
-      console.log(newQuestion._id);
       const newExam = await exams.findByIdAndUpdate(
         id,
         {
@@ -60,7 +51,6 @@ const ExamController = {
         },
         { new: true, useFindAndModify: false }
       );
-      console.log(newExam);
       res.send(newExam);
       res.json({ msg: "Question Added" });
     } catch (err) {
@@ -77,11 +67,12 @@ const ExamController = {
       const viewQuestions = await exams.findById(
         id,
         {
-          "Questions._id": 1,
           "Questions.QuestionName": 1,
           "Questions.options": 1,
+          "Questions.rightoption":1,
+          "Questions.marks":1
         }
-      );
+      ).select('-_id');
       res.json(viewQuestions);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
