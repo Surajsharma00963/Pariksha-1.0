@@ -44,7 +44,7 @@ export const UserNavbarData = [
   },
   {
     title: 'Profile',
-    path: '/support',
+    path: '/Profile',
     icon: <FaIcons.FaUserAlt size="30px"/>,
     cName: 'nav-text'
   }
