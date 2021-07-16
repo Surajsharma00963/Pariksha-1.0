@@ -130,8 +130,7 @@ const AdminController = {
   resetPassword: async (req, res) => {
     try {
       const { password, confirmPassword } = req.body;
-      if (password !== confirmPassword)
-        return res.status(400).json({ msg: "Password does not match" });
+      
       const PasswordHash = await bcrypt.hash(confirmPassword, 12);
       await users.findByIdAndUpdate(
         { _id: req.users.id },

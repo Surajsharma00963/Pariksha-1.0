@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { dispatchGetExam, fetchExam } from "../../../redux/action/ExamActions";
+
 import {
   dispatchQuestion,
   fetchQuestion,
@@ -37,6 +38,9 @@ function ViewQuestions() {
     //   history.push("/Dashboard");
     // }
   }, [exam, id]);
+  console.log(id);
+  console.log(Question._id);
+
   return (
     <div>
       <UserNavbar />
@@ -49,13 +53,14 @@ function ViewQuestions() {
       </div>
       <div className="container">
         {questions.map((e) => (
-          <div key={e.id} className="my-2">
-            <h4>
-              {e.id}
-              {e.QuestionName}
-            </h4>
+          <div key={e.id} className="my-5 shadow-lg px-4 py-4">
+            <div className="d-flex flex-row mb-1">
+              <h4>{e.QuestionName}</h4>
+            </div>
+            <hr className="border-2"></hr>
 
-            <div className="row gap-4">
+            <div className="row gap-2">
+              
               <div className="col">
                 <h4>A. {e.options.option1}</h4>
               </div>
@@ -63,7 +68,7 @@ function ViewQuestions() {
                 <h4>B. {e.options.option2}</h4>
               </div>
             </div>
-            <div className="row gap-4 mt-4">
+            <div className="row gap-2 mt-2">
               <div className="col">
                 <h4>C. {e.options.option3}</h4>
               </div>
@@ -71,8 +76,8 @@ function ViewQuestions() {
                 <h4>D. {e.options.option4}</h4>
               </div>
             </div>
-            <div>
-            <h4>Correct Option: {e.rightoption}</h4>
+            <div className="mt-3">
+              <h4>Correct Option: {e.rightoption}</h4>
             </div>
             <h4>Marks: {e.marks}</h4>
             <hr className="border-2"></hr>

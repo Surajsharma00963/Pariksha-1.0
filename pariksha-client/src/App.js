@@ -17,6 +17,8 @@ import AddQuestion from "./components/Body/UserPages/AddQuestions"
 import ViewQuestions  from "./components/Body/UserPages/ViewQuestion";
 import ForgotPassword from "./components/Body/ForgotPassword";
 import ResetPassword from "./components/Body/ResetPassword";
+import ExamInvite from "./components/Body/UserPages/ExamInvite";
+import CandidateList from "./components/Body/UserPages/CandidateList";
 
 function App() {
   const dispatch = useDispatch();
@@ -64,6 +66,10 @@ function App() {
             <Route exact path="/ViewQuestions/:id" component={ViewQuestions} />
             <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route exact path="/resetPassword/:token" component={ResetPassword} />
+            <Route exact path="/ExamInvite" component={ExamInvite} />
+            <Route exact path="/Candidates" component={CandidateList} />
+
+
 
 
             

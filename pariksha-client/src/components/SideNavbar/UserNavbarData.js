@@ -26,7 +26,7 @@ export const UserNavbarData = [
   
   {
     title: 'Exam Invite',
-    path: '/team',
+    path: '/ExamInvite',
     icon: <MdIcons.MdInsertInvitation  size="30px"/>,
     cName: 'nav-text'
   },

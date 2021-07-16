@@ -78,6 +78,22 @@ function Exam() {
       setaddExam({ ...addExam, err: err.response.data.msg, success: "" });
     }
   };
+  const handleDelete = async (id) => {
+    try {
+        if(categories._id !== id){
+            if(window.confirm("Are you sure you want to delete this account?")){
+                await axios.delete(`/user/Exam/Delete/${id}`, {
+                    headers: {Authorisation: token}
+                })
+            }
+            window.location.reload();
+
+        }
+        
+    } catch (err) {
+        setaddExam({...addExam, err: err.response.data.msg , success: ''})
+    }
+}
 
   return (
     <>
@@ -99,13 +115,13 @@ function Exam() {
         </div>
 
         <div
-          class="modal fade"
+          class="modal fade shadow-lg"
           id="exampleModal"
           tabindex="-1"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content">
               <div class="modal-header">
                 <h3 class="modal-title" id="exampleModalLabel">
@@ -118,7 +134,7 @@ function Exam() {
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body shadow-lg mx-4 my-4 rounded">
                 <div>
                   {err && showErrMsg(err)}
                   {success && showSuccessMsg(success)}
@@ -249,7 +265,7 @@ function Exam() {
                     </button>
                   </td>
                   <td className="py-2 fw-bold px-3 text-center">
-                    <button className="btn bg-danger">
+                    <button className="btn bg-danger "onClick={() => handleDelete(e._id)}>
                       <AiIcons.AiOutlineDelete size="22px" color="white" />
                     </button>
                   </td>

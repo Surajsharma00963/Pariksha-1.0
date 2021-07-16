@@ -31,6 +31,8 @@ function Category() {
     success: "",
   };
   const [category, setCategory] = useState(initialState);
+
+
   const { CategoryName, err, success } = category;
 
   const firstToken = useSelector((state) => state.token);
@@ -64,6 +66,22 @@ function Category() {
         setCategory({ ...category, err: err.response.data.msg, success: "" });
     }
   };
+  const handleDelete = async (id) => {
+    try {
+        if(categories._id !== id){
+            if(window.confirm("Are you sure you want to delete this account?")){
+                await axios.delete(`/user/category/Delete/${id}`, {
+                    headers: {Authorisation: firstToken}
+                })
+            }
+            window.location.reload();
+
+        }
+        
+    } catch (err) {
+        setCategory({...category, err: err.response.data.msg , success: ''})
+    }
+}
 
   const { user } = auth;
   return (
@@ -85,7 +103,7 @@ function Category() {
         </div>
 
         <div
-          class="modal fade"
+          class="modal fade shadow-lg"
           id="exampleModal"
           tabindex="-1"
           aria-labelledby="exampleModalLabel"
@@ -104,14 +122,14 @@ function Category() {
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body  shadow-lg mx-3 my-4 rounded">
                 <div>
                   {err && showErrMsg(err)}
                   {success && showSuccessMsg(success)}
                 </div>
 
                 <form
-                  className="form-control w-auto  mx-auto"
+                  className="form-control w-auto  mx-auto my-3"
                   onSubmit={handleSubmit}
                 >
                   <div className="my-2">
@@ -155,7 +173,7 @@ function Category() {
                   <td className="py-2 fw-bold px-3">{e.userName}</td>
 
                   <td className="py-2 fw-bold px-3 text-center">
-                    <button className="btn bg-danger">
+                    <button className="btn bg-danger" onClick={() => handleDelete(e._id)}>
                       <AiIcons.AiOutlineDelete size="22px" color="white" />
                     </button>
                   </td>

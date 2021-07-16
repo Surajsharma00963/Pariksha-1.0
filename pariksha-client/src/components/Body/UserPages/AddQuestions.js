@@ -82,8 +82,9 @@ function AddQuestion() {
           headers: { Authorisation: token },
         }
       );
+      
       setQuestion({ ...question, err: "", success: res.data.msg });
-      //window.location.reload();
+      window.location.reload();
     } catch (err) {
       setQuestion({ ...question, err: err.response.data.msg, success: "" });
     }
@@ -92,17 +93,17 @@ function AddQuestion() {
   return (
     <div>
       <UserNavbar />
-      <div className="container-fluid text-center bg-black text-light py-3 border-top border-3 border-info">
+      <div className="container-fluid text-center bg-black text-light py-3 border-top border-3 border-info shadow-lg">
         <h1>Add Question</h1>
       </div>
 
       <div className="container">
-        <div className="col-xl-6 col-12 mx-auto border border- my-5 ">
+        <div className="col-xl-6 col-12 mx-auto  rounded my-5 shadow-lg">
           <div>
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
           </div>
-          <form className="mx-5" onSubmit={handleSubmit}>
+          <form className="mx-5 py-3" onSubmit={handleSubmit}>
             <div className="my-2">
               <label htmlFor="CategoryName" className="form-label">
                 Question Title and Description
@@ -113,7 +114,7 @@ function AddQuestion() {
                 onChange={handleChangeInput}
                 name="QuestionName"
                 value={QuestionName}
-                className="form-control border-bottom border-dark"
+                className="form-control "
               ></textarea>
             </div>
             <div className="my-2">

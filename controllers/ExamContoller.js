@@ -67,17 +67,46 @@ const ExamController = {
       const viewQuestions = await exams.findById(
         id,
         {
+          "Questions._id": 1,
           "Questions.QuestionName": 1,
           "Questions.options": 1,
           "Questions.rightoption":1,
           "Questions.marks":1
         }
-      ).select('-_id');
+      );
       res.json(viewQuestions);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
+  DeleteExam:async(req,res)=>{
+    try {
+      await exams.findByIdAndDelete(req.params.id)
+      res.json({msg:"Deleted Exam"})
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+
+      
+    }
+  },
+  ExamInvite: async (req, res) => {
+    try {
+      const { email } = req.body;
+      const user = await users.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ msg: "This email does not exist." });
+      }
+      const access_token = createAccessToken({ id: user._id });
+      const url = `${CLIENT_URL}/Exam/${access_token}`;
+
+      ForgotPasswordMail(email, url, "Reset your Account Password");
+      res.json({ msg: "Password Resent, please check your email" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  
+
 };
 
 module.exports = ExamController;

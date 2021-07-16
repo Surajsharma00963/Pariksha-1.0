@@ -23,7 +23,8 @@ function ResetPassword() {
     setData({ ...data, [name]: value, err: "", success: "" });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+      e.preventDefault()
     if (isLength(password))
       return setData({
         ...data,
@@ -39,7 +40,7 @@ function ResetPassword() {
         "/user/resetPassword",
         { password },
         {
-          headers: { Authorization: token },
+          headers: { Authorisation: token },
         }
       );
 
@@ -95,7 +96,7 @@ function ResetPassword() {
                   </div>
 
                   <button type="submit" className="btn border  text-light mt-5">
-                    Login
+                    Reset
                   </button>
                 </form>
               </div>

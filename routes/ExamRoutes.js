@@ -11,4 +11,10 @@ router.patch("/AddQuestion/:id",auth, ExamController.AddQuestions);
 
 router.get("/ViewQuestions/:id",auth,  ExamController.ViewQuestions);
 
+router.delete("/Delete/:id", auth, ExamController.DeleteExam);
+
+
+
+
+
 module.exports = router;
